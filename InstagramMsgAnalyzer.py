@@ -8,15 +8,20 @@ from textblob import TextBlob # sentiment analysis library
 # text readability
 # more...?
 
+ENABLE_SENTIMENT_ANALYSIS = False
+
 a = json.loads(open('messages.json').read())
 
 for i in a:
     for j in i['conversation']:
         if 'text' in j:
-            text_to_be_analyzed = j['text']
-            blob = TextBlob(text_to_be_analyzed)
-            print(f"[{dp.parse(j['created_at']).timestamp()}] {blob.sentiment.polarity} {j['sender']}: {j['text']}")
+            if ENABLE_SENTIMENT_ANALYSIS:
+                text_to_be_analyzed = j['text']
+                blob = TextBlob(text_to_be_analyzed)
+                print(f"[{int(dp.parse(j['created_at']).timestamp())}] [{blob.sentiment.polarity}] {j['sender']}: {j['text']}")
+            else:
+                print(f"[{int(dp.parse(j['created_at']).timestamp())}] [N/A] {j['sender']}: {j['text']}")
         else:
             print(f"[{dp.parse(j['created_at']).timestamp()}] {j['sender']}: (HEART)")
         
-    print('-'*10+'CONVERSATION-BREAK'+'-'*10)
+    print('-'*10+'CONVERSATION_BREAK'+'-'*10)
