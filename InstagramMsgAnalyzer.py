@@ -9,7 +9,7 @@ import time
 # text readability
 # more...?
 
-ENABLE_SENTIMENT_ANALYSIS = False
+ENABLE_SENTIMENT_ANALYSIS = True
 
 json_file = json.loads(open('messages.json').read())
 
@@ -26,7 +26,11 @@ for i in json_file:
                 print(f"[{int(dp.parse(j['created_at']).timestamp())}] [N/A] {j['sender']}: {j['text']}")
             text_msgs += 1
         else:
-            print(f"[{int(dp.parse(j['created_at']).timestamp())}] [N/A] {j['sender']}: (HEART)") #TODO: sentiment analysis on heart based on previous msg(s) sent
+            if ENABLE_SENTIMENT_ANALYSIS:
+                analyzed_text = TextBlob(json_file[i]['conversation'][j-1]['text']) #INPROG: sentiment analysis on heart based on previous msg(s) sent
+                print(f"[{int(dp.parse(j['created_at']).timestamp())}] [{analyzed_text.sentiment.polarity}] {j['sender']}: (HEART)")
+            else:
+                print(f"[{int(dp.parse(j['created_at']).timestamp())}] [N/A] {j['sender']}: (HEART)")
             heart_msgs += 1
     print('-'*10 + 'CONVERSATION_BREAK' + '-'*10)
 
