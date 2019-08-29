@@ -13,8 +13,8 @@ ENABLE_SENTIMENT_ANALYSIS = True
 
 json_file = json.loads(open('messages.json').read())
 
-text_msgs = 0
-heart_msgs = 0
+num_text_msgs = 0
+num_heart_msgs = 0
 
 for i in json_file:
     for j in i['conversation']:
@@ -24,16 +24,16 @@ for i in json_file:
                 print(f"[{int(dp.parse(j['created_at']).timestamp())}] [{analyzed_text.sentiment.polarity}] {j['sender']}: {j['text']}")
             else:
                 print(f"[{int(dp.parse(j['created_at']).timestamp())}] [N/A] {j['sender']}: {j['text']}")
-            text_msgs += 1
+            num_text_msgs += 1
         else:
             if ENABLE_SENTIMENT_ANALYSIS:
                 analyzed_text = TextBlob(json_file[i]['conversation'][j-1]['text']) #INPROG: sentiment analysis on heart based on previous msg(s) sent
                 print(f"[{int(dp.parse(j['created_at']).timestamp())}] [{analyzed_text.sentiment.polarity}] {j['sender']}: (HEART)")
             else:
                 print(f"[{int(dp.parse(j['created_at']).timestamp())}] [N/A] {j['sender']}: (HEART)")
-            heart_msgs += 1
+            num_heart_msgs += 1
     print('-'*10 + 'CONVERSATION_BREAK' + '-'*10)
 
-print("text_msgs: " + str(text_msgs))
-print("heart_msgs: " + str(heart_msgs))
-print("total_msgs: " + str(text_msgs + heart_msgs))
+print("text_msgs: " + str(num_text_msgs))
+print("heart_msgs: " + str(num_heart_msgs))
+print("total_msgs: " + str(num_text_msgs + num_heart_msgs))
