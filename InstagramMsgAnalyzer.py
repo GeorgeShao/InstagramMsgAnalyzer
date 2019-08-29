@@ -22,6 +22,6 @@ for i in a:
             else:
                 print(f"[{int(dp.parse(j['created_at']).timestamp())}] [N/A] {j['sender']}: {j['text']}")
         else:
-            print(f"[{dp.parse(j['created_at']).timestamp()}] {j['sender']}: (HEART)")
+            print(f"[{dp.parse(j['created_at']).timestamp()}] {j['sender']}: (HEART)") # TODO: sentiment analysis on heart based on previous msg(s) sent
         
     print('-'*10+'CONVERSATION_BREAK'+'-'*10)
