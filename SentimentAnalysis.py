@@ -8,14 +8,12 @@ def SentimentAnalysis(json_file: dict):
     ''' 
     for i in json_file:
         for j in i['conversation']:
-            timestamp = int(dp.parse(j['created_at']).timestamp())
+            time = int(dp.parse(j['created_at']).timestamp())
+            sender = j['sender']
             if 'text' in j:
-                if ENABLE_SENTIMENT_ANALYSIS:
-                    analyzed_text = TextBlob(j['text'])
-                    print(f"[{timestamp}] [{analyzed_text.sentiment.polarity}] {j['sender']}: {j['text']}")
-                else:
-                    print(f"[{timestamp}] [N/A] {j['sender']}: {j['text']}")
+                analyzed_text = TextBlob(j['text'])
+                print(f"[{time}] [{analyzed_text.sentiment.polarity}] {sender}: {j['text']}")
             else:
-                print(f"[{timestamp}] [N/A] {j['sender']}: (HEART)")
+                print(f"[{time}] [N/A] {sender}: (HEART)")
         print('-'*10 + 'CONVERSATION_BREAK' + '-'*10)
 
