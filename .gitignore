@@ -105,5 +105,5 @@ venv.bak/
 
 .vscode/
 
-# privacy
+# Instagram private msgs data
 messages.json
