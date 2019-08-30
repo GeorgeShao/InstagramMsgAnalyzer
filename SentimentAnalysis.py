@@ -1,11 +1,11 @@
-import dateutil.parser as dp # ISO 8601 to Epoch time conversion library
-from textblob import TextBlob # sentiment analysis library
+import dateutil.parser as dp  # ISO 8601 to Epoch time conversion library
+from textblob import TextBlob  # sentiment analysis library
 
 
 def SentimentAnalysis(json_file: dict):
     '''
     Analyses entire JSON file of messages
-    ''' 
+    '''
     for i in json_file:
         for j in i['conversation']:
             time = int(dp.parse(j['created_at']).timestamp())
@@ -16,4 +16,3 @@ def SentimentAnalysis(json_file: dict):
             else:
                 print(f"[{time}] [N/A] {sender}: (HEART)")
         print('-'*10 + 'CONVERSATION_BREAK' + '-'*10)
-

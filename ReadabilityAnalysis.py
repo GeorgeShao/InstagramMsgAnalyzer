@@ -8,7 +8,7 @@ d = cmudict.dict()
 sentence_model = nltk.data.load('tokenizers/punkt/english.pickle')
 
 
-def _nsyl(word: str):
+def _LookUpNS(word: str):
     """
     Used for determining the number of syllables in a word using hardcoded the
     NLTK English dictionary
@@ -50,6 +50,4 @@ def ReadabilityAnalysis(json_file: dict):
                     user_data[j['sender']] += message
                 else:
                     user_data[j['sender']] = message
-                return user_data # XXX testing only
-
-        
+                return user_data  # XXX testing only

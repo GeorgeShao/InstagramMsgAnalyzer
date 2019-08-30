@@ -1,4 +1,4 @@
-import json # JSON file managing library
+import json  # JSON file managing library
 
 from SentimentAnalysis import SentimentAnalysis
 # from ReadabilityAnalysis import ReadabilityAnalysis
