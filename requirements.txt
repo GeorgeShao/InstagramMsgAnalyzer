@@ -1,0 +1,5 @@
+python-dateutil
+autocorrect
+nltk
+syllables
+textblob
