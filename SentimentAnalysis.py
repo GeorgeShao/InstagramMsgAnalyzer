@@ -18,10 +18,15 @@ def SentimentAnalysis(json_file: list):
             # get sentiment analysis score
             print("Computing sentiment analysis scores..." + str(num_msgs))
             if 'text' in j and j['text']:
-                analysis_score = TextBlob(j['text']).sentiment.polarity
+                if (2 - TextBlob(j['text']).sentiment.subjectivity) > 1:
+                    analysis_score = TextBlob(j['text']).sentiment.polarity * (1 + TextBlob(j['text']).sentiment.polarity)
+                else:
+                    analysis_score = TextBlob(j['text']).sentiment.polarity * (1 + TextBlob(j['text']).sentiment.polarity) * (2 - TextBlob(j['text']).sentiment.subjectivity)
+                if TextBlob(j['text']).sentiment.polarity < 0:
+                    analysis_score = -analysis_score
                 text = j['text']
             elif 'heart' in j and j['heart']:
-                analysis_score = 0
+                analysis_score = 1
                 text = "(HEART)"
             elif 'story_share' in j and j['story_share']:
                 analysis_score = 0
@@ -36,8 +41,12 @@ def SentimentAnalysis(json_file: list):
         # print('-'*10 + 'CONVERSATION_BREAK' + '-'*10)
     end_time = mytime.time()
     
-    print(user_data["george.gsg"])
+    print(user_data["frankye8998"])
     print("Sentiment Analysis Runtime: " + str(int(end_time - start_time)) + "s")
-    print("Sentiment Analysis Speed: " + str(num_msgs / int(end_time - start_time)) + "msg/s")
-    for i in user_data:
-        print(i[2])
+    print("Sentiment Analysis Speed: " + str(int(num_msgs /     int(end_time - start_time))) + "msg/s")
+    
+    sum = 0
+    for sender in user_data:
+        for msg_tuple in user_data[sender]:
+            sum += int(msg_tuple[2])
+        print(sender + ": " + str(sum/num_msgs))
