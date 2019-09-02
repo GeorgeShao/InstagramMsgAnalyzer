@@ -21,7 +21,7 @@ def SentimentAnalysis(json_file: list):
 
             # convert ISO 8601 timestamp to Epoch timestamp
             time = int(dp.parse(j['created_at']).timestamp())
-            
+
             # get sentiment analysis score
             print("Computing sentiment analysis scores..." + str(num_msgs))
             if 'text' in j and j['text']:
@@ -57,7 +57,5 @@ def SentimentAnalysis(json_file: list):
             if msg_tuple[2] == 0:
                 user_num_msgs_zero_rating += 1
             sum += int(msg_tuple[2])
-        # if sum != 0 and (user_num_msgs - user_num_msgs_zero_rating) > 500 and user_num_msgs > 100:
-        #     print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)) + " ~ " + str(user_num_msgs) + " ~ " + str(user_num_msgs_zero_rating) + " ~ " + str(round((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs * 100)) + "%")
-        if sum != 0 and (user_num_msgs - user_num_msgs_zero_rating) != 0 and user_num_msgs > 100 and ((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs) > 0.2:
+        if sum != 0 and (user_num_msgs - user_num_msgs_zero_rating) != 0 and ((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs) > 0.2 and (user_num_msgs - user_num_msgs_zero_rating) > 500:
             print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)) + " ~ " + str(user_num_msgs) + " ~ " + str(user_num_msgs_zero_rating) + " ~ " + str(round((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs * 100)) + "%")
