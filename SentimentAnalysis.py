@@ -1,6 +1,6 @@
 import dateutil.parser as dp  # ISO 8601 to Epoch time conversion library
-from textblob import TextBlob  # sentiment analysis library
 import time as mytime # time library
+from textblob import TextBlob  # sentiment analysis library
 
 
 def SentimentAnalysis(json_file: list):
@@ -57,5 +57,7 @@ def SentimentAnalysis(json_file: list):
             if msg_tuple[2] == 0:
                 user_num_msgs_zero_rating += 1
             sum += int(msg_tuple[2])
-        if sum != 0 and (user_num_msgs - user_num_msgs_zero_rating) > 500 and user_num_msgs > 100:
-            print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)) + " ~ " + str(user_num_msgs) + " ~ " + str(user_num_msgs_zero_rating))
+        # if sum != 0 and (user_num_msgs - user_num_msgs_zero_rating) > 500 and user_num_msgs > 100:
+        #     print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)) + " ~ " + str(user_num_msgs) + " ~ " + str(user_num_msgs_zero_rating) + " ~ " + str(round((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs * 100)) + "%")
+        if sum != 0 and (user_num_msgs - user_num_msgs_zero_rating) != 0 and user_num_msgs > 100 and ((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs) > 0.2:
+            print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)) + " ~ " + str(user_num_msgs) + " ~ " + str(user_num_msgs_zero_rating) + " ~ " + str(round((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs * 100)) + "%")
