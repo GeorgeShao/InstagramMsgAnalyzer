@@ -54,5 +54,8 @@ def SentimentAnalysis(json_file: list):
         for msg_tuple in user_data[sender]:
             # calculate sum of all the ratings
             user_num_msgs += 1
+            if msg_tuple[2] == 0:
+                user_num_msgs_zero_rating += 1
             sum += int(msg_tuple[2])
-        print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)))
+        if sum != 0 and (user_num_msgs - user_num_msgs_zero_rating) > 500 and user_num_msgs > 100:
+            print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)) + " ~ " + str(user_num_msgs) + " ~ " + str(user_num_msgs_zero_rating))
