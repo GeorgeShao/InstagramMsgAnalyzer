@@ -8,6 +8,8 @@ def SentimentAnalysis(json_file: list):
 
     num_msgs = 0
     num_msgs_zero_rating = 0
+    user_num_msgs = 0
+    user_num_msgs_zero_rating = 0
     sum = 0
 
     user_data = dict()
@@ -43,11 +45,14 @@ def SentimentAnalysis(json_file: list):
     
     end_time = mytime.time()
     
-    print("Sentiment Analysis Runtime: " + str(int(end_time - start_time)) + "s")
-    print("Sentiment Analysis Speed: " + str(int(num_msgs / int(end_time - start_time))) + "msg/s")
+    print("Sentiment Analysis Statistics: " + str(int(end_time - start_time)) + " s for " + str(num_msgs) + " msgs (" + str(int(num_msgs / int(end_time - start_time))) + " msg/s)")
 
     for sender in user_data:
+        user_num_msgs = 0
+        user_num_msgs_zero_rating = 0
+        sum = 0
         for msg_tuple in user_data[sender]:
             # calculate sum of all the ratings
+            user_num_msgs += 1
             sum += int(msg_tuple[2])
-        print(sender + ": " + str(round(sum/(num_msgs - (num_msgs_zero_rating/2)), 3)))
+        print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)))
