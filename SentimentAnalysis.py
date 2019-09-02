@@ -1,13 +1,17 @@
 import dateutil.parser as dp  # ISO 8601 to Epoch time conversion library
 from textblob import TextBlob  # sentiment analysis library
-import time as mytime
+import time as mytime # time library
 
 
 def SentimentAnalysis(json_file: list):
     start_time = mytime.time()
+
     num_msgs = 0
     num_msgs_zero_rating = 0
+    sum = 0
+
     user_data = dict()
+
     for i in json_file:
         for j in i['conversation']:
             # count num of msgs
@@ -36,16 +40,14 @@ def SentimentAnalysis(json_file: list):
                 user_data[j['sender']].append((text, time, analysis_score))
             else:
                 user_data[j['sender']] = [(text, time, analysis_score)]
-        
-        # print('-'*10 + 'CONVERSATION_BREAK' + '-'*10)
+    
     end_time = mytime.time()
     
-    print(user_data["jennyj.kwak"])
     print("Sentiment Analysis Runtime: " + str(int(end_time - start_time)) + "s")
     print("Sentiment Analysis Speed: " + str(int(num_msgs / int(end_time - start_time))) + "msg/s")
-    
-    sum = 0
+
     for sender in user_data:
         for msg_tuple in user_data[sender]:
+            # calculate sum of all the ratings
             sum += int(msg_tuple[2])
         print(sender + ": " + str(round(sum/(num_msgs - (num_msgs_zero_rating/2)), 3)))
