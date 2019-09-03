@@ -64,5 +64,8 @@ def SentimentAnalysis(json_file: list):
             excluded.append(sender)
     
     print("Excluded People: ")
+    excluded_ppl = 0
     for person in excluded:
         print(person + " ", end = "")
+        excluded_ppl += 1
+    print("# of Excluded: " + str(excluded_ppl))
