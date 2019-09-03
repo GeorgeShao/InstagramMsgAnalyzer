@@ -7,7 +7,6 @@ def SentimentAnalysis(json_file: list):
     start_time = mytime.time()
 
     num_msgs = 0
-    num_msgs_zero_rating = 0
     user_num_msgs = 0
     user_num_msgs_zero_rating = 0
     excluded = []
@@ -15,6 +14,7 @@ def SentimentAnalysis(json_file: list):
 
     user_data = dict()
 
+    # calculate sentiment analysis score for each message
     for i in json_file:
         for j in i['conversation']:
             # count num of msgs
@@ -34,20 +34,14 @@ def SentimentAnalysis(json_file: list):
             elif 'story_share' in j and j['story_share']:
                 analysis_score = 0
                 text = "(STORY)"
-            
-            if analysis_score == 0:
-                num_msgs_zero_rating += 1
 
             # save analysis data to user_data list
             if j['sender'] in user_data:
                 user_data[j['sender']].append((text, time, analysis_score))
             else:
                 user_data[j['sender']] = [(text, time, analysis_score)]
-    
-    end_time = mytime.time()
-    
-    print("Sentiment Analysis Statistics: " + str(int(end_time - start_time)) + " s for " + str(num_msgs) + " msgs (" + str(int(num_msgs / int(end_time - start_time))) + " msg/s)")
 
+    # calculate sentiment analysis score for each sender
     for sender in user_data:
         user_num_msgs = 0
         user_num_msgs_zero_rating = 0
@@ -63,6 +57,10 @@ def SentimentAnalysis(json_file: list):
         else:
             excluded.append(sender)
     
+    end_time = mytime.time()
+    
+    # output sentiment analysis results
+    print("Sentiment Analysis Statistics: " + str(int(end_time - start_time)) + " s for " + str(num_msgs) + " msgs (" + str(int(num_msgs / int(end_time - start_time))) + " msg/s)")
     print("Excluded People: ", end = "")
     excluded_ppl = 0
     for person in excluded:
