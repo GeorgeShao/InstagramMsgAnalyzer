@@ -10,6 +10,7 @@ def SentimentAnalysis(json_file: list):
     num_msgs_zero_rating = 0
     user_num_msgs = 0
     user_num_msgs_zero_rating = 0
+    excluded = []
     sum = 0
 
     user_data = dict()
@@ -57,5 +58,11 @@ def SentimentAnalysis(json_file: list):
             if msg_tuple[2] == 0:
                 user_num_msgs_zero_rating += 1
             sum += int(msg_tuple[2])
-        if sum != 0 and (user_num_msgs - user_num_msgs_zero_rating) != 0 and ((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs) > 0.2 and (user_num_msgs - user_num_msgs_zero_rating) > 500:
+        if sum != 0 and (user_num_msgs - user_num_msgs_zero_rating) != 0 and ((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs) > 0.2 and (user_num_msgs - user_num_msgs_zero_rating) > 300 and not ("__deleted__" in sender):
             print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)) + " ~ " + str(user_num_msgs) + " ~ " + str(user_num_msgs_zero_rating) + " ~ " + str(round((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs * 100)) + "%")
+        else:
+            excluded.append(sender)
+    
+    print("Excluded People: ")
+    for person in excluded:
+        print(person + " ", end = "")
