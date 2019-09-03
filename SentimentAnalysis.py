@@ -29,10 +29,10 @@ def SentimentAnalysis(json_file: list):
                 analysis_score = TextBlob(j['text']).sentiment.polarity * (2 - TextBlob(j['text']).sentiment.subjectivity)
                 text = j['text']
             elif 'heart' in j and j['heart']:
-                analysis_score = 1
+                analysis_score = 0.75
                 text = "(HEART)"
             elif 'story_share' in j and j['story_share']:
-                analysis_score = 0
+                analysis_score = 0.4
                 text = "(STORY)"
 
             # save analysis data to user_data list
