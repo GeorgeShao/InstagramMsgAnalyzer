@@ -60,6 +60,7 @@ def SentimentAnalysis(json_file: list):
     end_time = mytime.time()
     
     # output sentiment analysis results
+    print(user_data["george.gsg"])
     print("Sentiment Analysis Statistics: " + str(int(end_time - start_time)) + " s for " + str(num_msgs) + " msgs (" + str(int(num_msgs / int(end_time - start_time))) + " msg/s)")
     print("Excluded People: ", end = "")
     excluded_ppl = 0
