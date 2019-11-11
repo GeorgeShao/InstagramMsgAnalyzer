@@ -12,6 +12,9 @@ def SentimentAnalysis(json_file: list):
     excluded = []
     sum = 0
 
+    total_score = 0
+    total_included_ppl = 0
+
     user_data = dict()
 
     # calculate sentiment analysis score for each message
@@ -53,6 +56,8 @@ def SentimentAnalysis(json_file: list):
                 user_num_msgs_zero_rating += 1
             sum += int(msg_tuple[2])
         if sum != 0 and (user_num_msgs - user_num_msgs_zero_rating) != 0 and ((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs) > 0.2 and (user_num_msgs - user_num_msgs_zero_rating) > 300 and not ("__deleted__" in sender):
+            total_score += (sum/(user_num_msgs - user_num_msgs_zero_rating))
+            total_included_ppl += 1
             print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)) + " ~ " + str(user_num_msgs) + " ~ " + str(user_num_msgs_zero_rating) + " ~ " + str(round((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs * 100)) + "%")
         else:
             excluded.append(sender)
@@ -60,7 +65,7 @@ def SentimentAnalysis(json_file: list):
     end_time = mytime.time()
     
     # output sentiment analysis results
-    print(user_data["george.gsg"])
+    print("Average Score: " + str(total_score / total_included_ppl))
     print("Sentiment Analysis Statistics: " + str(int(end_time - start_time)) + " s for " + str(num_msgs) + " msgs (" + str(int(num_msgs / int(end_time - start_time))) + " msg/s)")
     print("Excluded People: ", end = "")
     excluded_ppl = 0
