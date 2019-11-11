@@ -68,8 +68,10 @@ def SentimentAnalysis(json_file: list):
     print("Average Score: " + str(total_score / total_included_ppl))
     print("Sentiment Analysis Statistics: " + str(int(end_time - start_time)) + " s for " + str(num_msgs) + " msgs (" + str(int(num_msgs / int(end_time - start_time))) + " msg/s)")
     print("Excluded People: ", end = "")
+
     excluded_ppl = 0
     for person in excluded:
         print(person + " ", end = "")
         excluded_ppl += 1
+    
     print("\n# of Excluded: " + str(excluded_ppl))
