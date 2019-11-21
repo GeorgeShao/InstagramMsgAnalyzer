@@ -14,5 +14,5 @@ json_file = json.loads(open('messages.json').read())
 if ENABLE_SENTIMENT_ANALYSIS:
     SentimentAnalysis(json_file)
 
-if ENABLE_READABILTY_ANALYSIS:
-    print(ReadabilityAnalysis(json_file))
+# if ENABLE_READABILTY_ANALYSIS:
+    # print(ReadabilityAnalysis(json_file))
