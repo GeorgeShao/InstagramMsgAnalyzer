@@ -9,8 +9,8 @@ from SentimentAnalysis import SentimentAnalysis
 ENABLE_SENTIMENT_ANALYSIS = True
 ENABLE_READABILTY_ANALYSIS = False
 
-json_file = json.loads(open('messages.json').read())
-
+json_file = json.loads(open('messages.json', errors='ignore').read())
+1
 if ENABLE_SENTIMENT_ANALYSIS:
     SentimentAnalysis(json_file)
 

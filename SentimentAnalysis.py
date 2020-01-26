@@ -58,7 +58,7 @@ def SentimentAnalysis(json_file: list):
         if sum != 0 and (user_num_msgs - user_num_msgs_zero_rating) != 0 and ((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs) > 0.2 and (user_num_msgs - user_num_msgs_zero_rating) > 300 and not ("__deleted__" in sender):
             total_score += (sum/(user_num_msgs - user_num_msgs_zero_rating))
             total_included_ppl += 1
-            print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)) + " ~ " + str(user_num_msgs) + " ~ " + str(user_num_msgs_zero_rating) + " ~ " + str(round((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs * 100)) + "%")
+            print(sender + ": " + str(round(sum/(user_num_msgs - user_num_msgs_zero_rating), 4)) + " ~ " + str(user_num_msgs) + " ~ " + str(user_num_msgs_zero_rating) + " ~ " + str(round((user_num_msgs - user_num_msgs_zero_rating)/user_num_msgs * 100)) + "% " + str(user_num_msgs+user_num_msgs_zero_rating))
         else:
             excluded.append(sender)
     
